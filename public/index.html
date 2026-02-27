@@ -3,26 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SignBridge - Real-Time Translation</title>
+    <title>SignBridge Pro | AR Translator</title>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <button id="sos-btn">🚨 SOS ALARM</button> 
-            <h1>SignBridge</h1>
-            <p class="status" id="status">Starting Camera...</p>
-        </div>
+    <div class="hud-container">
+        <canvas id="output_canvas"></canvas>
+        <video id="input_video" style="display:none;"></video>
         
-        <div class="video-wrapper">
-            <video id="input_video" style="display:none;"></video>
-            <canvas id="output_canvas" width="1280" height="720"></canvas>
-        </div>
-        
-        <div id="output-box">Waiting for Sign...</div>
+        <div class="corner-tl"></div><div class="corner-tr"></div>
+        <div class="corner-bl"></div><div class="corner-br"></div>
+
+        <header class="main-header">
+            <div class="branding">
+                <div class="glitch-wrapper">
+                    <h1 class="glitch" data-text="SIGNBRIDGE_v3.0">SIGNBRIDGE_v3.0</h1>
+                </div>
+                <p id="status">CONNECTING TO NEURAL LINK...</p>
+            </div>
+            <div class="emergency-zone">
+                <button id="sos-btn">SOS OVERRIDE</button>
+            </div>
+        </header>
+
+        <aside class="left-panel">
+            <div class="data-module">
+                <label>ENGINE_STATUS</label>
+                <div class="bar-container"><div id="confidence-bar" class="bar"></div></div>
+            </div>
+            <div class="guide-module">
+                <label>GESTURE_INDEX</label>
+                <ul>
+                    <li><span>PALM</span> STOP</li>
+                    <li><span>THUMB_DN</span> HELP</li>
+                    <li><span>3_FING</span> WATER</li>
+                    <li><span>PINKY</span> REST</li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="output-center">
+            <div id="output-box" class="neon-card">
+                <p class="meta">ENCODED_MESSAGE</p>
+                <h2 id="output-text">SYSTEM_IDLE</h2>
+            </div>
+        </main>
+
+        <footer class="bottom-bar">
+            <div class="system-logs">LOG: <span id="log-msg">READY_FOR_INPUT...</span></div>
+        </footer>
     </div>
     <script src="app.js"></script>
 </body>

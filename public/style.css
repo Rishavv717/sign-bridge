@@ -1,28 +1,85 @@
-body { font-family: 'Segoe UI', sans-serif; background: #121212; color: white; text-align: center; margin: 0; overflow: hidden; }
-.container { position: relative; width: 100vw; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.video-wrapper { position: relative; width: 80%; max-width: 800px; aspect-ratio: 16/9; }
-video, canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 20px; transform: rotateY(180deg); border: 2px solid #333; }
-
-#output-box { 
-    position: absolute; bottom: 8%; background: rgba(0,0,0,0.85); padding: 15px 40px; 
-    border-radius: 50px; font-size: 2.2rem; font-weight: bold; border: 3px solid #00ffcc; 
-    min-width: 250px; transition: all 0.2s; z-index: 10; box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+:root {
+    --cyan: #00ffff;
+    --magenta: #ff00ff;
+    --red: #ff3e3e;
+    --bg-dark: rgba(10, 10, 15, 0.85);
 }
+
+body, html {
+    margin: 0; padding: 0; background: #000;
+    color: var(--cyan); font-family: 'Share Tech Mono', monospace;
+    overflow: hidden; width: 100vw; height: 100vh;
+}
+
+#output_canvas {
+    position: absolute; width: 100%; height: 100%; object-fit: cover;
+    transform: rotateY(180deg); filter: contrast(1.2) brightness(0.7);
+}
+
+/* Corner Brackets for AR Feel */
+[class^="corner-"] {
+    position: absolute; width: 40px; height: 40px; border: 2px solid var(--cyan); z-index: 5;
+}
+.corner-tl { top: 20px; left: 20px; border-right: 0; border-bottom: 0; }
+.corner-tr { top: 20px; right: 20px; border-left: 0; border-bottom: 0; }
+.corner-bl { bottom: 20px; left: 20px; border-right: 0; border-top: 0; }
+.corner-br { bottom: 20px; right: 20px; border-left: 0; border-top: 0; }
+
+.main-header {
+    position: absolute; top: 40px; width: 100%; padding: 0 60px;
+    display: flex; justify-content: space-between; align-items: flex-start; z-index: 10;
+}
+
+.glitch {
+    font-family: 'Syncopate', sans-serif; font-size: 1.5rem; letter-spacing: 5px;
+    position: relative; color: white;
+}
+
+#status { font-size: 0.8rem; margin-top: 5px; color: var(--magenta); }
 
 #sos-btn {
-    position: absolute; top: 20px; right: 20px; background: #ef4444; color: white;
-    border: none; padding: 15px 25px; border-radius: 12px; font-weight: bold; cursor: pointer; z-index: 100;
+    background: transparent; border: 1px solid var(--red); color: var(--red);
+    padding: 10px 20px; font-family: 'Share Tech Mono'; cursor: pointer;
+    box-shadow: inset 0 0 10px rgba(255, 62, 62, 0.3); transition: 0.3s;
+}
+#sos-btn:hover { background: var(--red); color: white; }
+
+/* Left Panels */
+.left-panel {
+    position: absolute; left: 40px; top: 180px; width: 200px; z-index: 10;
 }
 
-.siren-active { animation: pulse-red 0.4s infinite alternate; }
-.emergency-mode { animation: flash-bg 0.5s infinite; border-color: #ff0000 !important; color: #ff0000 !important; }
-
-@keyframes pulse-red {
-    from { transform: scale(1); background: #ef4444; }
-    to { transform: scale(1.05); background: #b91c1c; box-shadow: 0 0 20px #ff0000; }
+.data-module, .guide-module {
+    background: var(--bg-dark); border-left: 2px solid var(--cyan);
+    padding: 15px; margin-bottom: 20px; backdrop-filter: blur(5px);
 }
 
-@keyframes flash-bg {
-    0% { background: rgba(255, 0, 0, 0.3); }
-    100% { background: rgba(0, 0, 0, 0.9); }
+.bar-container { width: 100%; height: 4px; background: #222; margin-top: 8px; }
+.bar { height: 100%; background: var(--cyan); width: 0%; transition: 0.2s; box-shadow: 0 0 10px var(--cyan); }
+
+ul { list-style: none; padding: 0; font-size: 0.9rem; }
+ul li { margin: 10px 0; display: flex; justify-content: space-between; }
+ul li span { color: var(--magenta); font-weight: bold; }
+
+/* Output Center */
+.output-center {
+    position: absolute; bottom: 80px; width: 100%; display: flex; justify-content: center; z-index: 10;
+}
+
+.neon-card {
+    background: var(--bg-dark); border: 1px solid var(--cyan);
+    padding: 30px 80px; text-align: center; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+}
+
+.meta { font-size: 0.7rem; margin: 0; opacity: 0.6; }
+#output-text { font-family: 'Syncopate', sans-serif; font-size: 3rem; margin: 10px 0; color: white; }
+
+/* Emergency Mode */
+.emergency-active { border-color: var(--red) !important; animation: red-flicker 0.2s infinite; }
+.emergency-active #output-text { color: var(--red); }
+
+@keyframes red-flicker {
+    0% { background: rgba(255, 0, 0, 0.1); }
+    100% { background: rgba(255, 0, 0, 0.3); }
 }
