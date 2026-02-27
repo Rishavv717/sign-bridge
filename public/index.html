@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignBridge - Real-Time Translation</title>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button id="sos-btn">🚨 SOS ALARM</button> 
+            <h1>SignBridge</h1>
+            <p class="status" id="status">Starting Camera...</p>
+        </div>
+        
+        <div class="video-wrapper">
+            <video id="input_video" style="display:none;"></video>
+            <canvas id="output_canvas" width="1280" height="720"></canvas>
+        </div>
+        
+        <div id="output-box">Waiting for Sign...</div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

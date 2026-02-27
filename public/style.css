@@ -1,0 +1,28 @@
+body { font-family: 'Segoe UI', sans-serif; background: #121212; color: white; text-align: center; margin: 0; overflow: hidden; }
+.container { position: relative; width: 100vw; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.video-wrapper { position: relative; width: 80%; max-width: 800px; aspect-ratio: 16/9; }
+video, canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 20px; transform: rotateY(180deg); border: 2px solid #333; }
+
+#output-box { 
+    position: absolute; bottom: 8%; background: rgba(0,0,0,0.85); padding: 15px 40px; 
+    border-radius: 50px; font-size: 2.2rem; font-weight: bold; border: 3px solid #00ffcc; 
+    min-width: 250px; transition: all 0.2s; z-index: 10; box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+}
+
+#sos-btn {
+    position: absolute; top: 20px; right: 20px; background: #ef4444; color: white;
+    border: none; padding: 15px 25px; border-radius: 12px; font-weight: bold; cursor: pointer; z-index: 100;
+}
+
+.siren-active { animation: pulse-red 0.4s infinite alternate; }
+.emergency-mode { animation: flash-bg 0.5s infinite; border-color: #ff0000 !important; color: #ff0000 !important; }
+
+@keyframes pulse-red {
+    from { transform: scale(1); background: #ef4444; }
+    to { transform: scale(1.05); background: #b91c1c; box-shadow: 0 0 20px #ff0000; }
+}
+
+@keyframes flash-bg {
+    0% { background: rgba(255, 0, 0, 0.3); }
+    100% { background: rgba(0, 0, 0, 0.9); }
+}
